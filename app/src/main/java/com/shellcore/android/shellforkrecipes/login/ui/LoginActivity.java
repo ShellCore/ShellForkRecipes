@@ -10,11 +10,10 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.shellcore.android.shellforkrecipes.R;
-import com.shellcore.android.shellforkrecipes.recipes.RecipeMainActivity;
+import com.shellcore.android.shellforkrecipes.recipemain.ui.RecipeMainActivity;
 
 import java.util.Arrays;
 
