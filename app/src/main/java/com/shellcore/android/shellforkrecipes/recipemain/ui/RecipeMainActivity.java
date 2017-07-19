@@ -1,17 +1,24 @@
 package com.shellcore.android.shellforkrecipes.recipemain.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.shellcore.android.shellforkrecipes.R;
+import com.shellcore.android.shellforkrecipes.ShellForkRecipesApplication;
 import com.shellcore.android.shellforkrecipes.db.entities.Recipe;
 import com.shellcore.android.shellforkrecipes.libs.base.ImageLoader;
+import com.shellcore.android.shellforkrecipes.recipelist.RecipeListActivity;
 import com.shellcore.android.shellforkrecipes.recipemain.RecipeMainPresenter;
 
 import butterknife.BindView;
@@ -46,6 +53,7 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeMainV
         ButterKnife.bind(this);
 
         setupInjection();
+        setupImageLoader();
         presenter.onCreate();
         presenter.getNextRecipe();
     }
@@ -56,10 +64,24 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeMainV
         super.onDestroy();
     }
 
-    private void setupInjection() {
-        // TODO
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_recipe_main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_list:
+                navigateToListScreen();
+                break;
+            case R.id.action_logout:
+                logout();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @OnClick(R.id.btnkeep)
     public void onKeep() {
@@ -124,4 +146,33 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeMainV
                 .show();
     }
 
+    private void setupInjection() {
+        // TODO
+    }
+
+    private void setupImageLoader() {
+        RequestListener glideRequestListener = new RequestListener() {
+            @Override
+            public boolean onException(Exception e, Object model, Target target, boolean isFirstResource) {
+                presenter.imageError(e.getLocalizedMessage());
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Object resource, Object model, Target target, boolean isFromMemoryCache, boolean isFirstResource) {
+                presenter.imageReady();
+                return false;
+            }
+        };
+        imageLoader.setOnFinishedImageLoaderListener(glideRequestListener);
+    }
+
+    private void navigateToListScreen() {
+        startActivity(new Intent(this, RecipeListActivity.class));
+    }
+
+    private void logout() {
+        ShellForkRecipesApplication app = (ShellForkRecipesApplication) getApplication();
+        app.logout();
+    }
 }

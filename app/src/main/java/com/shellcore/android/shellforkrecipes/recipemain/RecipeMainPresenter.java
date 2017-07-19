@@ -19,5 +19,7 @@ public interface RecipeMainPresenter {
 
     void onEventMainThread(RecipeMainEvent event);
 
+    void imageReady();
+    void imageError(String error);
     RecipeMainView getView(); // This is util when we require to test the code
 }

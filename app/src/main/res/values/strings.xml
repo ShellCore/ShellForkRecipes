@@ -8,4 +8,10 @@
     <!--Main-->
     <string name="recipemain.error">Imposible obtener información: %s</string>
     <string name="recipemain.notice.saved">Guardado exitosamente</string>
+
+    <!--Menu-->
+    <string name="global.menu.action.logout">Cerrar sesión</string>
+
+    <!--Main menu-->
+    <string name="recipemain.menu.action.list">Recetas guardadas</string>
 </resources>
