@@ -5,9 +5,13 @@ import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -27,7 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RecipeMainActivity extends AppCompatActivity implements RecipeMainView {
+public class RecipeMainActivity extends AppCompatActivity implements RecipeMainView, SwipeGestureListener {
 
     // Variables
     private Recipe currentRecipe;
@@ -57,6 +61,8 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeMainV
 
         setupInjection();
         setupImageLoader();
+        setupGestureDetection();
+
         presenter.onCreate();
         presenter.getNextRecipe();
     }
@@ -87,6 +93,7 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeMainV
     }
 
     @OnClick(R.id.btnkeep)
+    @Override
     public void onKeep() {
         if (currentRecipe != null) {
             presenter.saveRecipe(currentRecipe);
@@ -94,6 +101,7 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeMainV
     }
 
     @OnClick(R.id.btnDismiss)
+    @Override
     public void onDismiss() {
         presenter.dismissRecipe();
     }
@@ -122,12 +130,16 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeMainV
 
     @Override
     public void saveAnimation() {
-        // TODO
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.save_animation);
+        anim.setAnimationListener(getAnimationListener());
+        imgRecipe.startAnimation(anim);
     }
 
     @Override
     public void dismissAnimation() {
-        // TODO
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.dismiss_animation);
+        anim.setAnimationListener(getAnimationListener());
+        imgRecipe.startAnimation(anim);
     }
 
     @Override
@@ -174,6 +186,18 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeMainV
         imageLoader.setOnFinishedImageLoaderListener(glideRequestListener);
     }
 
+    private void setupGestureDetection() {
+        final GestureDetector gestureDetector = new GestureDetector(this, new SwipeGestureDetector(this));
+        View.OnTouchListener gestureOnTouchListener = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        };
+
+        imgRecipe.setOnTouchListener(gestureOnTouchListener);
+    }
+
     private void navigateToListScreen() {
         startActivity(new Intent(this, RecipeListActivity.class));
     }
@@ -189,5 +213,28 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeMainV
 
     private RecipeMainPresenter getPresenter() {
         return component.getPresenter();
+    }
+
+    private void clearImage() {
+        imgRecipe.setImageResource(0);
+    }
+
+    private Animation.AnimationListener getAnimationListener() {
+        return new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                clearImage();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        };
     }
 }
