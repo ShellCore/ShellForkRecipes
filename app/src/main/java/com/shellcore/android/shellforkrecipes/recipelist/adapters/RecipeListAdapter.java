@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.share.model.ShareLinkContent;
@@ -26,7 +25,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Cesar on 20/07/2017.
  */
-public class RecipeListAdapterAdapter extends RecyclerView.Adapter<RecipeListAdapterAdapter.ViewHolder> {
+public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.ViewHolder> {
 
     // Variables
     private List<Recipe> list;
@@ -36,7 +35,7 @@ public class RecipeListAdapterAdapter extends RecyclerView.Adapter<RecipeListAda
     private ImageLoader imageLoader;
 
 
-    public RecipeListAdapterAdapter(ImageLoader imageLoader, List<Recipe> list, OnItemClickListener clickListener) {
+    public RecipeListAdapter(ImageLoader imageLoader, List<Recipe> list, OnItemClickListener clickListener) {
         this.imageLoader = imageLoader;
         this.list = list;
         this.clickListener = clickListener;
