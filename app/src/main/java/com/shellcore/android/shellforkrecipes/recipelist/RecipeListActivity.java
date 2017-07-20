@@ -17,6 +17,7 @@ import com.shellcore.android.shellforkrecipes.recipelist.adapters.OnItemClickLis
 import com.shellcore.android.shellforkrecipes.recipelist.adapters.RecipeListAdapter;
 import com.shellcore.android.shellforkrecipes.recipelist.di.RecipeListComponent;
 import com.shellcore.android.shellforkrecipes.recipelist.ui.RecipeListView;
+import com.shellcore.android.shellforkrecipes.recipemain.ui.RecipeMainActivity;
 
 import java.util.List;
 
