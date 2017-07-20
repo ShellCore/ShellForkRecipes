@@ -3,8 +3,6 @@ package com.shellcore.android.shellforkrecipes.recipelist;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.facebook.FacebookSdk;
 import com.shellcore.android.shellforkrecipes.R;
 import com.shellcore.android.shellforkrecipes.ShellForkRecipesApplication;
 import com.shellcore.android.shellforkrecipes.db.entities.Recipe;
 import com.shellcore.android.shellforkrecipes.recipelist.adapters.OnItemClickListener;
 import com.shellcore.android.shellforkrecipes.recipelist.adapters.RecipeListAdapter;
+import com.shellcore.android.shellforkrecipes.recipelist.di.RecipeListComponent;
 import com.shellcore.android.shellforkrecipes.recipelist.ui.RecipeListView;
 
 import java.util.List;
@@ -34,6 +32,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
     // Services
     private RecipeListAdapter adapter;
     private RecipeListPresenter presenter;
+    private RecipeListComponent component;
 
     // Components
     @BindView(R.id.toolbar)
@@ -120,7 +119,10 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
     }
 
     private void setupInjection() {
-        // TODO Implementar
+        ShellForkRecipesApplication app = (ShellForkRecipesApplication) getApplication();
+        component = app.getRecipeListComponent(this, this, this);
+        adapter = getAdapter();
+        presenter = getPresenter();
     }
 
     private void setupRecyclerView() {
@@ -137,5 +139,12 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
         app.logout();
     }
 
+    private RecipeListAdapter getAdapter() {
+        return component.getAdapter();
+    }
+
+    private RecipeListPresenter getPresenter() {
+        return component.getPresenter();
+    }
 
 }
