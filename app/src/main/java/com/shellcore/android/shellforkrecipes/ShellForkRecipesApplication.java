@@ -6,7 +6,13 @@ import android.content.Intent;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.raizlabs.android.dbflow.config.FlowManager;
+import com.shellcore.android.shellforkrecipes.libs.di.LibsModule;
 import com.shellcore.android.shellforkrecipes.login.ui.LoginActivity;
+import com.shellcore.android.shellforkrecipes.recipemain.di.DaggerRecipeMainComponent;
+import com.shellcore.android.shellforkrecipes.recipemain.di.RecipeMainComponent;
+import com.shellcore.android.shellforkrecipes.recipemain.di.RecipeMainModule;
+import com.shellcore.android.shellforkrecipes.recipemain.ui.RecipeMainActivity;
+import com.shellcore.android.shellforkrecipes.recipemain.ui.RecipeMainView;
 
 /**
  * Created by Cesar on 19/07/2017.
@@ -47,5 +53,12 @@ public class ShellForkRecipesApplication extends Application {
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK
                 | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    public RecipeMainComponent getRecipeMainComponent(RecipeMainActivity activity, RecipeMainView view) {
+        return DaggerRecipeMainComponent.builder()
+                .libsModule(new LibsModule(activity))
+                .recipeMainModule(new RecipeMainModule(view))
+                .build();
     }
 }

@@ -13,8 +13,7 @@
         android:layout_height="@dimen/img_height_size"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="16dp"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_margin="16dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout"

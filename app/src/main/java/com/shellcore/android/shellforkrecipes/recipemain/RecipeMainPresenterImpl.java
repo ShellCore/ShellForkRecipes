@@ -60,7 +60,7 @@ public class RecipeMainPresenterImpl implements RecipeMainPresenter {
             view.hideUIElements();
             view.showProgressbar();
         }
-        saveRecipe(recipe);
+        saveInteractor.execute(recipe);
     }
 
     @Override

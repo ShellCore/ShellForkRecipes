@@ -1,6 +1,7 @@
 package com.shellcore.android.shellforkrecipes.recipemain.ui;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import com.shellcore.android.shellforkrecipes.db.entities.Recipe;
 import com.shellcore.android.shellforkrecipes.libs.base.ImageLoader;
 import com.shellcore.android.shellforkrecipes.recipelist.RecipeListActivity;
 import com.shellcore.android.shellforkrecipes.recipemain.RecipeMainPresenter;
+import com.shellcore.android.shellforkrecipes.recipemain.di.RecipeMainComponent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +35,7 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeMainV
     // Services
     private RecipeMainPresenter presenter;
     private ImageLoader imageLoader;
+    private RecipeMainComponent component;
 
     // Components
     @BindView(R.id.imgRecipe)
@@ -147,7 +150,11 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeMainV
     }
 
     private void setupInjection() {
-        // TODO
+        ShellForkRecipesApplication app = (ShellForkRecipesApplication) getApplication();
+        component = app.getRecipeMainComponent(this, this);
+
+        imageLoader = getImageLoader();
+        presenter = getPresenter();
     }
 
     private void setupImageLoader() {
@@ -174,5 +181,13 @@ public class RecipeMainActivity extends AppCompatActivity implements RecipeMainV
     private void logout() {
         ShellForkRecipesApplication app = (ShellForkRecipesApplication) getApplication();
         app.logout();
+    }
+
+    private ImageLoader getImageLoader() {
+        return component.getImageLoader();
+    }
+
+    private RecipeMainPresenter getPresenter() {
+        return component.getPresenter();
     }
 }

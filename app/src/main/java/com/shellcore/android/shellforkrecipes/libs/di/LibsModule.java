@@ -1,7 +1,6 @@
 package com.shellcore.android.shellforkrecipes.libs.di;
 
 import android.app.Activity;
-import android.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
