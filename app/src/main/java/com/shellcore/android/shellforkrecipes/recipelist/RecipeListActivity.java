@@ -131,7 +131,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
     }
 
     private void navigateToMainScreen() {
-        startActivity(new Intent(this, RecipeListActivity.class));
+        startActivity(new Intent(this, RecipeMainActivity.class));
     }
 
     private void logout() {
