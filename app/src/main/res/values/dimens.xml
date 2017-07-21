@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="btn_size">86dp</dimen>
+    <dimen name="img_height_size">300dp</dimen>
+    <dimen name="activity_horizontal_margin">8dp</dimen>
+    <dimen name="recipes_list_image_size">150dp</dimen>
+    <dimen name="row_icons_padding">8dp</dimen>
+</resources>
